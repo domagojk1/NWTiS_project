@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>NWTIS dkopic2</comment>
+<entry key="APPID">95453dcae137c3505bb45e88ecc00272</entry>
+<entry key="intervalDretve">5</entry>
+<entry key="brojDretvi">10</entry>
+<entry key="serverPort">8500</entry>
+<entry key="imapPort">143</entry>
+<entry key="adresa">localhost</entry>
+<entry key="adresaPosiljatelj">dkopic2@nwtis.nastava.foi.hr</entry>
+<entry key="adresaPrimatelj">servis@nwtis.nastava.foi.hr</entry>
+<entry key="sifraPrimatelj">123456</entry>
+<entry key="uspjesnePoruke">NWTiS_uspjesne_poruke</entry>
+<entry key="neuspjesnePoruke">NWTiS_neuspjesne_poruke</entry>
+<entry key="neispravnePoruke">NWTiS_neispravne_poruke</entry>
+<entry key="predmetPoruke">NWTiS poruka</entry>
+<entry key="intervalVremena">100</entry>
+<entry key="kvota">10</entry>
+<entry key="brojLinija">15</entry>
+</properties>

@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+    <application>
+        <resource-bundle>
+            <base-name>org.foi.nwtis.dkopic2.resources.i18n</base-name>
+            <var>m</var>
+        </resource-bundle>
+        <locale-config>
+            <default-locale>hr</default-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+    </application>
+    
+    <!-- Navigation page for welcome page -->
+    <navigation-rule>
+        <from-view-id>/welcome.xhtml</from-view-id>
+        
+        <navigation-case>
+            <from-outcome>OK</from-outcome>
+            <to-view-id>/index.html</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>ERROR</from-outcome>
+            <to-view-id>/welcome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <!-- Navigation for login page -->
+    <navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+         
+        <navigation-case>
+            <from-outcome>USER</from-outcome>
+            <to-view-id>/user/user.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>ADMIN</from-outcome>
+            <to-view-id>/admin/adminMenu.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>ERROR</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule>
+    
+    <!-- Navigation rule for registration -->
+    <navigation-rule>
+        <from-view-id>/registration.xhtml</from-view-id>
+        
+        <navigation-case>
+            <from-outcome>ERROR</from-outcome>
+            <to-view-id>/registration.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>OK</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>LOGOUT</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+</faces-config>

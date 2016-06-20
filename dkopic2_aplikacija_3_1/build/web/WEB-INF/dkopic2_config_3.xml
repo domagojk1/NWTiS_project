@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>NWTIS dkopic2</comment>
+<entry key="serverPort">8500</entry>
+<entry key="adresa">localhost</entry>
+<entry key="datoteka1">NWTiS_dkopic2_1.bin</entry>
+<entry key="datoteka2">NWTiS_dkopic2_2.bin</entry>
+</properties>

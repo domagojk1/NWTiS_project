@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:p="http://primefaces.org/ui"> 
+    <f:view locale="${localization.chosenLocale}"/>
+    <h:head>
+        <title>${m.mail_Title}</title>
+        <h:outputStylesheet library="css" name="osnovna.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="default.css"/>
+    </h:head>
+    <h:body>
+        <h1>${m.mail_Title}</h1>
+        <h:panelGrid columns="1">
+            <h:form>
+                <h:outputLink value="../welcome.xhtml">${m.odabir_Jezika}</h:outputLink> 
+                <br/>
+                <h:commandButton value=" ${m.adminMenu_Logout} " action="${login.logout()}" />
+                <br/><br/>
+                <h:panelGroup layout="block">
+                    <h:commandButton action="${mailViewer.fetchMails()}" value=" ${m.mail_Map} ">
+                        <f:ajax execute="folder" render="@form"/>
+                    </h:commandButton>
+                    <br/><br/>
+                    <h:selectOneListbox id="folder" value="${mailViewer.selectedFolder}">
+                        <f:selectItems value="${mailViewer.availableFolders}" itemLabel="${f.name}" itemValue="${f.name}"/>
+                    </h:selectOneListbox>  
+                    <br/><br/>
+                </h:panelGroup>
+                
+                <h:panelGroup layout="block" id="messages">
+                    <p:dataTable value="${mailViewer.messages}" var="item" rendered="${mailViewer.showMessages}" paginator="true" rows="${mailViewer.rows}">
+                        <p:column>
+                            <f:facet name="header">${m.mail_Subject}</f:facet>
+                            ${item.subject}
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">${m.mail_Sender}</f:facet>
+                            ${item.sender.toString()}
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">${m.mail_Receiver}</f:facet>
+                            ${item.allRecipients[0].getAddress()}
+                        </p:column>
+                        
+                        <p:column>
+                            <h:commandButton value=" ${m.mail_Action} " action="${mailViewer.showMessage(item)}">
+                                <f:ajax execute="messages" render="@form"/>
+                            </h:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <br/><br/>
+                
+                </h:panelGroup>
+   
+                <h:outputLabel for="message" value=" ${m.mail_Message}: " rendered="${mailViewer.showMessage}" style="font-weight: bold"/>
+                <br/><br/>
+                <h:panelGroup style="white-space: pre-wrap;">    
+                    <h:outputText id="message" value="#{mailViewer.mail}" rendered="${mailViewer.showMessage}"/>
+                </h:panelGroup>
+            </h:form>
+        </h:panelGrid>
+    </h:body>
+</html>
+

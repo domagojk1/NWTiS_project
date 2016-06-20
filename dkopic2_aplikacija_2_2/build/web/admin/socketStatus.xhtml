@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view locale="${localization.chosenLocale}"/>
+    <h:head>
+        <title>${m.status_Title}</title>
+        <h:outputStylesheet library="css" name="osnovna.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="default.css"/>
+    </h:head>
+    <h:body>
+        <h1>${m.status_Title}</h1>
+        <h:form>
+            <h:outputLink value="../welcome.xhtml">${m.odabir_Jezika}</h:outputLink> 
+            <br/>
+            <h:commandButton value=" ${m.adminMenu_Logout} " action="${login.logout()}" />
+            <br/>
+            <h:panelGrid columns="1" style="margin: 0 auto;">
+                <h:panelGroup layout="block">
+                    <h:outputText value="${m.status_Order}"/> 
+                        <br/>
+                        <h:selectOneRadio value="${socket.send}" id="command">
+                             <f:selectItem itemValue="PAUSE" itemLabel="PAUSE"/>
+                            <f:selectItem itemValue="START" itemLabel="START"/>
+                            <f:selectItem itemValue="STOP" itemLabel="STOP"/>
+                            <f:selectItem itemValue="STATUS" itemLabel="STATUS"/>
+                        </h:selectOneRadio>
+
+                        <br/><br/>
+                        <h:commandButton action="${socket.execute}" value=" ${m.status_Send} ">
+                            <f:ajax execute="command" render="response"/>
+                        </h:commandButton>
+
+                        <br/><br/>
+                        <h:outputText value="${socket.response}" id="response" style="font-weight: bold; color:red;"/> 
+                </h:panelGroup>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>
+

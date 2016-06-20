@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view locale="${localization.chosenLocale}"/>
+    <h:head>
+        <title>${m.index_Naslov}</title>
+        <h:outputStylesheet library="css" name="osnovna.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="default.css"/>
+    </h:head>
+    <h:body>
+        <h1>${m.index_Naslov}</h1>
+        <h:form>
+            <h:outputLink value="welcome.xhtml">${m.odabir_Jezika}</h:outputLink>
+            <br/>
+            <ul>
+                <li>
+                    <h:outputLink value="login.xhtml">${m.index_Login}</h:outputLink>
+                </li>
+                <br/>
+                <li>
+                    <h:outputLink value="registration.xhtml">${m.index_Registracija}</h:outputLink>
+                </li>
+            </ul>
+            <br />
+        </h:form>    
+    </h:body>
+</html>
+

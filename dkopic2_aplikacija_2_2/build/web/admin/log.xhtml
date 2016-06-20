@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view locale="${localization.chosenLocale}"/>
+    <h:head>
+        <title>${m.log_Title}</title>
+        <h:outputStylesheet library="css" name="osnovna.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="default.css"/>
+    </h:head>
+    <h:body>
+        <h1>${m.log_Title}</h1>
+        <h:form id="form">
+            <h:outputLink value="../welcome.xhtml">${m.odabir_Jezika}</h:outputLink> 
+            <br/>
+            <h:commandButton value=" ${m.adminMenu_Logout} " action="${login.logout()}" />
+            <br/>
+                    <h:panelGrid columns="5">
+                        
+                        <h:panelGroup layout="block">
+                            <h:outputLabel> ${m.log_StartTime} </h:outputLabel>
+                            <h:inputText id="filterStart" value="${logs.startTime}"/>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup layout="block">
+                            <h:outputLabel> ${m.log_EndTime} </h:outputLabel>
+                            <h:inputText id="filterEnd" value="${logs.endTime}"/>
+                        </h:panelGroup>
+                      
+                        <h:panelGroup layout="block">
+                            <h:outputLabel> ${m.log_Ip} </h:outputLabel>
+                            <h:inputText id="filterIp" value="${logs.ip}"/>
+                        </h:panelGroup>   
+                        
+                        <h:panelGroup layout="block">
+                            <h:outputLabel> ${m.log_User} </h:outputLabel>
+                            <h:inputText id="filterUser" value="${logs.user}"/>
+                        </h:panelGroup>   
+                        
+                    </h:panelGrid>
+                    
+                    <br/>
+                    <h:commandButton value=" ${m.log_Filter} " action="${logs.filter()}">
+                        <f:ajax execute="filterStart filterEnd filterIp filterUser" render="log"/>
+                    </h:commandButton>
+                    
+                    <br/><br/>
+                    
+                    <h:panelGrid columns="1">
+                        <h:panelGroup id="log">
+                            <p:dataTable value="${logs.logs}" var="l" paginator="true" rows="${logs.rows}">
+                                <p:column>
+                                    <f:facet name="header">${m.log_User}</f:facet>
+                                    ${l.korisnik}
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">${m.log_URL}</f:facet>
+                                    ${l.url}
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">${m.log_IpAdresa}</f:facet>
+                                    ${l.ipadresa}
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">${m.log_Time}</f:facet>
+                                    <h:outputText value="${l.vrijeme}">
+                                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss"/>
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">${m.log_Trajanje}</f:facet>
+                                    ${l.trajanje}
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">${m.log_Status}</f:facet>
+                                    ${l.status}
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:form>
+    </h:body>
+</html>
+

@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view locale="${localization.chosenLocale}"/>
+    <h:head>
+        <title>${m.categories_Title}</title>
+        <h:outputStylesheet library="css" name="osnovna.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="default.css"/>
+    </h:head>
+    <h:body>
+        <h1>Kategorije korisnika</h1>
+        <h:form>
+            <h:outputLink value="../welcome.xhtml">${m.odabir_Jezika}</h:outputLink> 
+            <br/>
+            <h:commandButton value=" ${m.adminMenu_Logout} " action="${login.logout()}" />
+            <br/>
+            <h:panelGrid columns="1" style="margin: 0 auto;">
+                <h:panelGroup layout="block">
+
+                        <h:dataTable id="table" value="${userCategories.users}" var="p" border="1">
+                            <h:column>
+                                <f:facet name="header">${m.registration_Username}</f:facet>
+                                ${p.username}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">${m.registration_Name}</f:facet>
+                                ${p.ime}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">${m.registration_Surname}</f:facet>
+                                ${p.prezime}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">${m.registration_Email}</f:facet>
+                                ${p.mail}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">${m.request_Action}</f:facet>
+                                <h:commandButton value=" ${m.categories_Up} " actionListener="${userCategories.increment(p)}">
+                                    <f:ajax execute="table" render="@form table"/>
+                                </h:commandButton>
+                                <h:commandButton value=" ${m.categories_Down} " actionListener="${userCategories.decrement(p)}">
+                                    <f:ajax execute="table" render="@form table"/>
+                                </h:commandButton>
+                            </h:column>
+                        </h:dataTable>
+
+                        <br/><br/>
+                        <h:outputText value="${userCategories.response}" id="response" style="font-weight: bold; color:red;"/> 
+
+                </h:panelGroup>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>
+

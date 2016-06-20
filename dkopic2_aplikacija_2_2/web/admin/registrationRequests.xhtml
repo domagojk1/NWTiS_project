@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <f:view locale="${localization.chosenLocale}"/>
+    <h:head>
+        <title>${m.request_Title}</title>
+        <h:outputStylesheet library="css" name="osnovna.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="default.css"/>
+    </h:head>
+    <h:body>
+        <h1>${m.request_Title}</h1>
+        <h:form> 
+            <h:panelGrid columns="1" style="margin: 0 auto;">
+
+                <h:panelGroup layout="block" id="users">
+                        <h:outputLink value="../welcome.xhtml">${m.odabir_Jezika}</h:outputLink> 
+                        <br/>
+                        <h:commandButton value=" ${m.adminMenu_Logout} " action="${login.logout()}" />
+                        <br/>
+                </h:panelGroup>
+                <h:panelGroup layout="block">
+                    <h:dataTable id="pending" value="${registrationRequests.pending}" var="p" border="1">
+                            <h:column>
+                                <f:facet name="header">${m.registration_Username}</f:facet>
+                                ${p.username}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">${m.registration_Name}</f:facet>
+                                ${p.ime}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">${m.registration_Surname}</f:facet>
+                                ${p.prezime}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">${m.registration_Email}</f:facet>
+                                ${p.mail}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">${m.request_Action}</f:facet>
+                                <h:commandButton id="action" value=" ${m.request_Approve} " actionListener="${registrationRequests.approveRequest(p)}">
+                                    <f:ajax render="@form pending response"/>
+                                </h:commandButton>
+                                <h:commandButton id="act2" value=" ${m.request_Reject} " actionListener="${registrationRequests.rejectRequest(p)}">
+                                    <f:ajax render="@form pending response"/>
+                                </h:commandButton>
+                            </h:column>
+                        </h:dataTable>
+
+                        <br/><br/>
+                        <h:outputText value="${registrationRequests.response}" id="response" style="font-weight: bold; color:red;"/> 
+                </h:panelGroup>    
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>
+

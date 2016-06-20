@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view locale="${localization.chosenLocale}"/>
+    <h:head>
+        <title>${m.login_Title}</title>
+        <h:outputStylesheet library="css" name="osnovna.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="default.css"/>
+    </h:head>
+    <h:body>
+        <h1>${m.login_Title}</h1>
+        
+        <h:panelGrid columns="1" style="margin: 0 auto;">
+            <h:panelGroup layout="block">
+                <h:form>
+                    <h:commandButton value=" ${m.adminMenu_Logout} " action="${login.logout()}" />
+                    <br/><br/>
+                    <h:commandLink action="welcome.xhtml" value="${m.odabir_Jezika}"/>
+                    <br/>
+                    <h:commandLink action="registration.xhtml" value="${m.registration_Title}"/>
+                    <br/>
+                    <br/>
+                    <h:outputText value="${m.login_Username}" style="font-weight: bold"/> 
+                    <br/>
+                    <h:inputText value="#{login.username}"/>
+
+                    <br/><br/>
+
+                    <h:outputText value="${m.login_Password}" style="font-weight: bold"/>
+                    <br/>
+                    <h:inputSecret value="#{login.password}"/>
+
+                    <br/><br/>
+                    <h:commandButton action="${login.login()}" value="${m.index_Login}"/>
+                </h:form>
+
+                <br/><br/>
+                <h:outputText value="${login.message}" style="font-weight: bold; color: red;"/>
+            </h:panelGroup>
+        </h:panelGrid>
+    </h:body>
+</html>
+

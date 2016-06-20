@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Korisnici</title>
+        <h:outputStylesheet library="css" name="osnovna.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="default.css"/>
+    </h:head>
+    <h:body>
+        <h1>Korisnici</h1>
+        <h:form>
+            <h:panelGrid columns="2" style="margin:0 auto; width: 80%">
+                <h:panelGroup layout="block">
+                    <h4>Aktivni korisnici</h4>
+                    <h:dataTable value="${users.users.users}" var="item" border="1">
+                        <h:column>
+                            <f:facet name="header">Korisnicko ime</f:facet>
+                            ${item.username}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Lozinka</f:facet>
+                            ${item.password}
+                        </h:column>
+                        <h:column>
+                            <h:commandButton id="user" value=" Prikazi adrese " action="${users.fetchAddrs(item.id)}">
+                                <f:ajax execute="user" render="@form"/>
+                            </h:commandButton>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+
+                <h:panelGroup layout="block">
+                    <h4>Korisnicke adrese</h4>
+                    <h:selectOneListbox value="${users.address}" size="10" id="addr">
+                        <f:selectItems value="${users.addresses.addresses}"/>
+                    </h:selectOneListbox>
+                    <br/>
+                    <br/>
+                    <h:commandButton value=" Prikazi prognozu " action="${users.fetchMeteo()}">
+                        <f:ajax execute="addr" render="@form meteo"/>
+                    </h:commandButton>
+                </h:panelGroup>
+                
+                <h:panelGroup layout="block" id="meteo">
+                    <h:dataTable class="tablica" headerClass="zaglavlje" rowClasses="neparni,parni" value="${users.meteo}" var="item" rendered="${users.showMeteo}">
+                        <h:column>
+                            <f:facet name="header">Adresa</f:facet>
+                            ${item.address.address}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Vrijeme</f:facet>
+                            ${item.weatherValue}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Temperatura</f:facet>
+                            ${item.temperatureValue}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Maksimalna temperatura</f:facet>
+                            ${item.temperatureMax}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Minimalna temperatura</f:facet>
+                            ${item.temperatureMin}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Vlaga</f:facet>
+                            ${item.humidityValue}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Tlak</f:facet>
+                            ${item.pressureValue}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Vjetar</f:facet>
+                            ${item.windSpeedValue}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Promijenjeno</f:facet>
+                            ${item.lastUpdate}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Preuzeto</f:facet>
+                            ${item.downloadTime}
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>
+

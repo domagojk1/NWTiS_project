@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>JMS poruke</title>
+        <h:outputScript library="js" name="websocket.js"/>
+        <h:outputStylesheet library="css" name="osnovna.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="default.css"/>
+    </h:head>
+    <h:body>
+        <h1>JMS poruke</h1>
+        <h:form>
+            <h:commandButton action="${messages.deleteAllAddr()}" value=" Obrisi sve poruke">
+                <f:ajax render="address"/>
+            </h:commandButton>
+            <br/>
+            <p:dataTable rows="10" value="${messages.addresses}" var="item" paginator="true" id="address">
+                <p:column>
+                    <f:facet name="header">Adresa</f:facet>
+                    ${item.address}
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">Korisnicko ime</f:facet>
+                    ${item.username}
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">Lozinka</f:facet>
+                    ${item.password}
+                </p:column>
+                
+                <p:column>
+                    <h:commandButton id="deleteAddr" value="Obrisi" action="${messages.deleteAddress(item)}">
+                        <f:ajax execute="deleteAddr" render="address"/>
+                    </h:commandButton>
+                </p:column>
+            </p:dataTable>
+            <br/><br/>
+            
+            <h:commandButton action="${messages.deleteAllMails()}" value=" Obrisi sve poruke ">
+                <f:ajax render="mail"/>
+            </h:commandButton>
+            <br/>
+            <p:dataTable rows="10" paginator="true" value="${messages.mails}" var="it" id="mail">
+                <p:column>
+                    <f:facet name="header">Pocetak rada dretve</f:facet>
+                    <h:outputText value="${it.threadStart}">
+                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">Kraj rada dretve</f:facet>
+                    <h:outputText value="${it.threadEnd}">
+                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">Broj procitanih poruka</f:facet>
+                    ${it.messages}
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">Broj NWTiS poruka</f:facet>
+                    ${it.messagesNWTiS}
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">Broj odobrenih korisnika</f:facet>
+                    ${it.approvedUsers}
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">Broj ostalih korisnika</f:facet>
+                    ${it.unapprovedUsers}
+                </p:column>
+                
+                <p:column>
+                    <h:commandButton id="deleteMail" value="Obrisi" action="${messages.deleteMail(it)}">
+                        <f:ajax execute="deleteMail" render="mail"/>
+                    </h:commandButton>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

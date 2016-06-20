@@ -1,0 +1,201 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view locale="${localization.chosenLocale}"/>
+    <h:head>
+        <title>${m.user_Title}</title>
+        <h:outputStylesheet library="css" name="osnovna.css"/>
+        <h:outputStylesheet library="css" name="cssLayout.css"/>
+        <h:outputStylesheet library="css" name="default.css"/>
+    </h:head>
+    <h:body>
+        <h1>Adrese</h1>
+        <h:form>
+            <h:outputLink value="${request.contextPath}/welcome.xhtml">${m.odabir_Jezika}</h:outputLink> 
+            <br/>
+            <h:commandButton value=" ${m.adminMenu_Logout} " action="${login.logout()}" />
+            <h:panelGrid columns="3" style="margin: 0 auto; width: 80%; border-color: salmon;" border="1">
+                <h:panelGroup layout="block" style="text-align: center">
+                    <h:inputText id="newAddr" value="${addresses.newAddress}"/>
+                    <h:commandButton action="${addresses.addNew()}" value=" ${m.user_New} ">
+                        <f:ajax execute="newAddr" render="@form addresses" immediate="true"/>
+                    </h:commandButton>
+                    
+                    <br/>
+                    <h:outputText id="response" value="${addresses.response}" style="font-weight: bold; color:red;"/>
+                    
+                    <br/><br/>
+                    <h:selectOneListbox id="addresses" value="#{addresses.chosenAddress}" size="10">
+                        <f:selectItems value="${addresses.list}" var="item" itemLabel="${item.address}" itemValue="${item.address}"/>
+                    </h:selectOneListbox>
+                                 
+                    <br/><br/>
+                    <h:commandButton action="${addresses.showUsers()}" value=" ${m.usew_ShowMine} ">
+                        <f:ajax render="@form"/>
+                    </h:commandButton>
+                    
+                    <br/><br/>
+                    <h:commandButton action="${addresses.showAll()}" value=" ${m.user_ShowAll} ">
+                        <f:ajax render="@form"/>
+                    </h:commandButton>
+                </h:panelGroup>
+
+                <h:panelGroup layout="block" style="text-align: center">
+                    <h:outputText value="${m.user_Number}"/>
+                    <br/>
+                    <h:inputText id="number" value="${addresses.meteoNumber}"/>
+                    <br/><br/>
+                    <h:commandButton value=" ${m.user_Last} " action="${addresses.fetchMeteo()}">
+                        <f:ajax execute="number addresses" render="meteo deviation forecast" immediate="true"/>
+                    </h:commandButton>
+                    <br/><br/>
+                    <h:commandButton value=" ${m.user_Current} " action="${addresses.fetchForecast()}">
+                        <f:ajax execute="addresses" render="meteo deviation forecast" immediate="true"/>
+                    </h:commandButton>
+                </h:panelGroup>
+                
+                <h:panelGroup layout="block" style="text-align: center">
+                    <h4>Odstupanje prognoze</h4>
+                    <h:outputText value="${m.user_Start}"/>
+                    <h:inputText value="${addresses.startDate}" id="start"/>
+                    <br/>
+                    <h:outputText value="${m.user_End}"/>
+                    <h:inputText value="${addresses.endDate}" id="end"/>
+                    <br/><br/>
+                    <h:commandButton value=" ${m.user_Deviation} " action="${addresses.fetchDeviation()}">
+                        <f:ajax execute="addresses start end" render="meteo deviation forecast" immediate="true"/>
+                    </h:commandButton>
+                </h:panelGroup>
+            </h:panelGrid>
+            
+            <h:panelGrid columns="1">
+                <h:panelGroup layout="block" id="meteo">
+                    <p:dataTable rendered="${addresses.showMeteo}" value="${addresses.meteoList}" var="item" paginator="true" rows="10">
+                        <p:column>
+                            <f:facet name="header">${m.user_Address}</f:facet>
+                            ${item.address.address}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_Weather}</f:facet>
+                            ${item.weatherValue}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_Temp}</f:facet>
+                            ${item.temperatureValue}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_TempMax}</f:facet>
+                            ${item.temperatureMax}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_TempMin}</f:facet>
+                            ${item.temperatureMin}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_Humidity}</f:facet>
+                            ${item.humidityValue}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_Pressure}</f:facet>
+                            ${item.pressureValue}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_Wind}</f:facet>
+                            ${item.windSpeedValue}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_LastUpdate}</f:facet>
+                            ${item.lastUpdate}"
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_DownloadTime}</f:facet>
+                            "${item.downloadTime}"
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+                
+                <h:panelGroup layout="block" id="forecast">
+                    <p:dataTable rendered="${addresses.showForecast}" value="${addresses.forecastList}" var="item" paginator="true" rows="10">
+                        <p:column>
+                            <f:facet name="header">${m.user_Address}</f:facet>
+                            ${item.address.address}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_Weather}</f:facet>
+                            ${item.weatherValue}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_Temp}</f:facet>
+                            ${item.temperatureValue}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_TempMax}</f:facet>
+                            ${item.temperatureMax}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_TempMin}</f:facet>
+                            ${item.temperatureMin}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_Humidity}</f:facet>
+                            ${item.humidityValue}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_Pressure}</f:facet>
+                            ${item.pressureValue}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_Wind}</f:facet>
+                            ${item.windSpeedValue}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_LastUpdate}</f:facet>
+                            ${item.lastUpdate}"
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">${m.user_DownloadTime}</f:facet>
+                            "${item.downloadTime}"
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+                
+                <h:panelGroup layout="block" id="deviation">
+                    <h:dataTable value="${addresses.deviation}" var="item" class="tablica" headerClass="zaglavlje" rowClasses="neparni,parni" rendered="${addresses.showDeviation}">
+                        <h:column>
+                            <f:facet name="header">${m.user_Address}</f:facet>
+                            ${item.address.address}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">${m.user_Temp}</f:facet>
+                            ${item.temperatureValue}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">${m.user_TempMax}</f:facet>
+                            ${item.temperatureMax}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">${m.user_TempMin}</f:facet>
+                            ${item.temperatureMin}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">${m.user_Humidity}</f:facet>
+                            ${item.humidityValue}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">${m.user_Pressure}</f:facet>
+                            ${item.pressureValue}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">${m.user_Wind}</f:facet>
+                            ${item.windSpeedValue}
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+            </h:panelGrid> 
+        </h:form>
+    </h:body>
+</html>
+
